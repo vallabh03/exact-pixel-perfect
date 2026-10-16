@@ -8,6 +8,13 @@
       "when": 1792141777332,
       "tag": "0000_create_paani_lookbook",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792142170108,
+      "tag": "0001_extend_paani_collection_assets",
+      "breakpoints": true
     }
   ]
 }

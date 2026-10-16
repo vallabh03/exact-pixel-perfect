@@ -18,20 +18,29 @@ export type Database = {
         Row: {
           collection_id: string
           created_at: string
+          description: string
           id: string
           image_url: string
+          sort_order: number
+          title: string
         }
         Insert: {
           collection_id: string
           created_at?: string
+          description?: string
           id?: string
           image_url: string
+          sort_order?: number
+          title?: string
         }
         Update: {
           collection_id?: string
           created_at?: string
+          description?: string
           id?: string
           image_url?: string
+          sort_order?: number
+          title?: string
         }
         Relationships: [
           {

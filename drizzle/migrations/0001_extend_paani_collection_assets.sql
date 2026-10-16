@@ -1,0 +1,5 @@
+ALTER TABLE public.collection_assets ADD COLUMN title text NOT NULL DEFAULT '';
+ALTER TABLE public.collection_assets ADD COLUMN description text NOT NULL DEFAULT '';
+ALTER TABLE public.collection_assets ADD COLUMN sort_order integer NOT NULL DEFAULT 0;
+CREATE POLICY "Visitors can sign published PAANI collection photos" ON storage.objects FOR SELECT TO anon USING (bucket_id = 'paani-collections' AND EXISTS (SELECT 1 FROM public.collection_assets a JOIN public.collections c ON c.id = a.collection_id WHERE a.image_url = storage.objects.name AND c.status = 'published' AND (c.launch_at IS NULL OR c.launch_at <= now())));
+CREATE POLICY "Signed in visitors can sign published PAANI collection photos" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'paani-collections' AND EXISTS (SELECT 1 FROM public.collection_assets a JOIN public.collections c ON c.id = a.collection_id WHERE a.image_url = storage.objects.name AND c.status = 'published' AND (c.launch_at IS NULL OR c.launch_at <= now())));

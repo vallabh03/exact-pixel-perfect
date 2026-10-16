@@ -1,4 +1,4 @@
 - [ ] Build the PAANI editorial lookbook pages and shared navigation.
 - [ ] Use supplied collection photography and verified collection descriptions; exclude all prices and shopping controls.
 - [ ] Add persistent collection publishing controls for featured, scheduled, and archived content.
-- [ ] Verify routes, lightbox navigation, responsive layout, and latest preview build.
+- [ ] Verify routes, lightbox navigation, owner publishing, responsive layout, and latest preview build.

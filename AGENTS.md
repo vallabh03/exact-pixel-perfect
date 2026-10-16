@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Store editable lookbook content in Lovable Cloud and keep privileged collection publishing behind owner-role RLS; visitors and the owner must share one durable content source.

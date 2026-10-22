@@ -15,6 +15,13 @@
       "when": 1792142170108,
       "tag": "0001_extend_paani_collection_assets",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792654559120,
+      "tag": "0002_seed_paani_collections",
+      "breakpoints": true
     }
   ]
 }

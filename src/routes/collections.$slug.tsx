@@ -3,13 +3,15 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 
-import { collectionDetailQuery } from "@/lib/paani-data";
+import { collectionDetailQuery, type CollectionDetailData } from "@/lib/paani-data";
 import { Lightbox } from "@/components/lightbox";
 import { LoadError } from "@/components/route-states";
 
 export const Route = createFileRoute("/collections/$slug")({
   head: ({ loaderData }) => {
-    const collection = loaderData?.collection;
+    const collection = (
+      loaderData as CollectionDetailData | null | undefined
+    )?.collection;
     return {
       meta: [
         {
@@ -40,7 +42,7 @@ export const Route = createFileRoute("/collections/$slug")({
       ],
     };
   },
-  loader: async ({ context, params }) => {
+  loader: async ({ context, params }): Promise<CollectionDetailData> => {
     const data = await context.queryClient.ensureQueryData(
       collectionDetailQuery(params.slug),
     );
@@ -68,8 +70,11 @@ export const Route = createFileRoute("/collections/$slug")({
 });
 
 function CollectionDetail() {
-  const { collection, assets } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const { data } = useSuspenseQuery(collectionDetailQuery(slug));
   const [lightboxIndex, setLightboxIndex] = useState(-1);
+  if (!data) throw notFound();
+  const { collection, assets } = data;
 
   return (
     <div>

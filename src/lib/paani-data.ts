@@ -24,6 +24,11 @@ export type AssetRow = {
   sort_order: number;
 };
 
+export type CollectionDetailData = {
+  collection: CollectionRow;
+  assets: AssetRow[];
+};
+
 /** Public, visible collections: published and not scheduled for a future launch. */
 export async function fetchPublicCollections(): Promise<CollectionRow[]> {
   const nowIso = new Date().toISOString();
@@ -46,10 +51,7 @@ export const publicCollectionsQuery = queryOptions({
 export function collectionDetailQuery(slug: string) {
   return queryOptions({
     queryKey: ["collections", "detail", slug],
-    queryFn: async (): Promise<{
-      collection: CollectionRow;
-      assets: AssetRow[];
-    } | null> => {
+    queryFn: async (): Promise<CollectionDetailData | null> => {
       const { data: collection, error } = await supabase
         .from("collections")
         .select("*")

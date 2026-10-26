@@ -3,7 +3,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 
-import { collectionDetailQuery } from "@/lib/paani-data";
+import { collectionDetailQuery, type CollectionDetailData } from "@/lib/paani-data";
 import { Lightbox } from "@/components/lightbox";
 import { LoadError } from "@/components/route-states";
 
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/collections/$slug")({
       ],
     };
   },
-  loader: async ({ context, params }) => {
+  loader: async ({ context, params }): Promise<CollectionDetailData> => {
     const data = await context.queryClient.ensureQueryData(
       collectionDetailQuery(params.slug),
     );

@@ -100,14 +100,15 @@ function StudioPage() {
 
   const statusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const patch: Record<string, unknown> = {
-        status,
-        updated_at: new Date().toISOString(),
-      };
-      if (status === "published") patch.published_at = new Date().toISOString();
       const { error } = await supabase
         .from("collections")
-        .update(patch)
+        .update({
+          status,
+          updated_at: new Date().toISOString(),
+          ...(status === "published"
+            ? { published_at: new Date().toISOString() }
+            : {}),
+        })
         .eq("id", id);
       if (error) throw new Error(error.message);
     },

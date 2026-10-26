@@ -72,9 +72,9 @@ export const Route = createFileRoute("/collections/$slug")({
 function CollectionDetail() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(collectionDetailQuery(slug));
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
   if (!data) throw notFound();
   const { collection, assets } = data;
-  const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   return (
     <div>

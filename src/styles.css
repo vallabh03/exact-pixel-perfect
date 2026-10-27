@@ -158,3 +158,109 @@
   letter-spacing: 0.28em;
   text-transform: uppercase;
 }
+
+/*
+ * Motion language: slow, weighty editorial transitions.
+ * Everything eases out on the same long curve so the site feels calm.
+ */
+@keyframes paani-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes paani-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes paani-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes paani-kenburns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes paani-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-fade-up {
+  animation: paani-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-fade-in {
+  animation: paani-fade-in 0.5s ease-out both;
+}
+
+@utility animate-zoom-in {
+  animation: paani-zoom-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-kenburns {
+  animation: paani-kenburns 7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-slide-down {
+  animation: paani-slide-down 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll reveal base state; .reveal-visible is added by <Reveal />. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

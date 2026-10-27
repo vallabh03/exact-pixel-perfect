@@ -18,7 +18,7 @@ import { Route as NewDropsRouteImport } from './routes/new-drops'
 import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as AuthenticatedStudioRouteImport } from './routes/_authenticated/studio'
-import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
+import { Route as CollectionsSlugRouteImport } from './routes/collections_.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -65,15 +65,15 @@ const AuthenticatedStudioRoute = AuthenticatedStudioRouteImport.update({
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => CollectionsRoute,
+  id: '/collections_/$slug',
+  path: '/collections/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/collections': typeof CollectionsRouteWithChildren
+  '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/new-drops': typeof NewDropsRoute
   '/our-story': typeof OurStoryRoute
@@ -84,7 +84,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/collections': typeof CollectionsRouteWithChildren
+  '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/new-drops': typeof NewDropsRoute
   '/our-story': typeof OurStoryRoute
@@ -97,13 +97,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/collections': typeof CollectionsRouteWithChildren
+  '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/new-drops': typeof NewDropsRoute
   '/our-story': typeof OurStoryRoute
   '/reviews': typeof ReviewsRoute
   '/_authenticated/studio': typeof AuthenticatedStudioRoute
-  '/collections/$slug': typeof CollectionsSlugRoute
+  '/collections_/$slug': typeof CollectionsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -139,18 +139,19 @@ export interface FileRouteTypes {
     | '/our-story'
     | '/reviews'
     | '/_authenticated/studio'
-    | '/collections/$slug'
+    | '/collections_/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  CollectionsRoute: typeof CollectionsRouteWithChildren
+  CollectionsRoute: typeof CollectionsRoute
   ContactRoute: typeof ContactRoute
   NewDropsRoute: typeof NewDropsRoute
   OurStoryRoute: typeof OurStoryRoute
   ReviewsRoute: typeof ReviewsRoute
+  CollectionsSlugRoute: typeof CollectionsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -218,12 +219,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudioRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/collections/$slug': {
-      id: '/collections/$slug'
-      path: '/$slug'
+    '/collections_/$slug': {
+      id: '/collections_/$slug'
+      path: '/collections/$slug'
       fullPath: '/collections/$slug'
       preLoaderRoute: typeof CollectionsSlugRouteImport
-      parentRoute: typeof CollectionsRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -239,27 +240,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface CollectionsRouteChildren {
-  CollectionsSlugRoute: typeof CollectionsSlugRoute
-}
-
-const CollectionsRouteChildren: CollectionsRouteChildren = {
-  CollectionsSlugRoute: CollectionsSlugRoute,
-}
-
-const CollectionsRouteWithChildren = CollectionsRoute._addFileChildren(
-  CollectionsRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  CollectionsRoute: CollectionsRouteWithChildren,
+  CollectionsRoute: CollectionsRoute,
   ContactRoute: ContactRoute,
   NewDropsRoute: NewDropsRoute,
   OurStoryRoute: OurStoryRoute,
   ReviewsRoute: ReviewsRoute,
+  CollectionsSlugRoute: CollectionsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

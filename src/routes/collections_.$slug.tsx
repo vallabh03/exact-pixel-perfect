@@ -7,7 +7,7 @@ import { collectionDetailQuery, type CollectionDetailData } from "@/lib/paani-da
 import { Lightbox } from "@/components/lightbox";
 import { LoadError } from "@/components/route-states";
 
-export const Route = createFileRoute("/collections/$slug")({
+export const Route = createFileRoute("/collections_/$slug")({
   head: ({ loaderData }) => {
     const collection = (
       loaderData as CollectionDetailData | null | undefined

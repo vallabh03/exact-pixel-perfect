@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Store editable lookbook content in Lovable Cloud and keep privileged collection publishing behind owner-role RLS; visitors and the owner must share one durable content source.
+- Collection detail lives in `collections_.$slug.tsx` (trailing underscore) so it never nests inside the full-page `collections.tsx` route — a full-page parent without an Outlet swallows its children.

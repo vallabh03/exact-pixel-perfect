@@ -1,4 +1,5 @@
-- [ ] Build the PAANI editorial lookbook pages and shared navigation.
-- [ ] Use supplied collection photography and verified collection descriptions; exclude all prices and shopping controls.
-- [ ] Add persistent collection publishing controls for featured, scheduled, and archived content.
-- [ ] Verify routes, lightbox navigation, owner publishing, responsive layout, and latest preview build.
+- [x] Build the PAANI editorial lookbook pages and shared navigation.
+- [x] Use supplied collection photography and verified collection descriptions; exclude all prices and shopping controls.
+- [x] Add persistent collection publishing controls for featured, scheduled, and archived content.
+- [x] Verify routes, lightbox navigation, responsive layout, and latest preview build.
+- [ ] Owner publishing flow sign-in: needs the owner to create the account with vallabhneelkant01@gmail.com (email confirmation link required).

@@ -7,6 +7,7 @@ import { ASSETS } from "@/lib/paani-assets";
 import { SITE } from "@/lib/site";
 import { publicCollectionsQuery } from "@/lib/paani-data";
 import { Lightbox, type LightboxImage } from "@/components/lightbox";
+import { Reveal } from "@/components/reveal";
 import { LoadError } from "@/components/route-states";
 
 export const Route = createFileRoute("/")({
@@ -60,12 +61,12 @@ const INSTAGRAM_IMAGES = [
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
-    <div className="mb-10">
+    <Reveal className="mb-10">
       <p className="eyebrow text-muted-foreground">{eyebrow}</p>
       <h2 className="mt-2 font-display text-4xl font-medium text-foreground sm:text-5xl">
         {title}
       </h2>
-    </div>
+    </Reveal>
   );
 }
 
@@ -83,19 +84,21 @@ function Index() {
         <img
           src={ASSETS.paani_muse_01_jpg}
           alt="PAANI CLOTHING editorial hero"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover animate-kenburns"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/10" />
         <div className="relative mx-auto w-full max-w-6xl px-6 pb-20">
-          <p className="eyebrow text-foreground/70">Elevated occasionwear · Hyderabad</p>
-          <h1 className="mt-4 max-w-3xl font-display text-5xl font-medium leading-tight text-foreground sm:text-7xl">
+          <p className="eyebrow animate-fade-up text-foreground/70">
+            Elevated occasionwear · Hyderabad
+          </p>
+          <h1 className="mt-4 max-w-3xl font-display text-5xl font-medium leading-tight text-foreground animate-fade-up sm:text-7xl" style={{ animationDelay: "180ms" }}>
             Every Outfit Tells a Story.
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-foreground/80">
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-foreground/80 animate-fade-up" style={{ animationDelay: "360ms" }}>
             Discover the collections of PAANI CLOTHING — pieces crafted to feel
             confident, luxurious, and timeless.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: "540ms" }}>
             <Link
               to="/collections"
               className="inline-flex items-center gap-2 bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
@@ -116,37 +119,39 @@ function Index() {
       {featured && (
         <section className="mx-auto max-w-6xl px-6 py-24">
           <SectionHeading eyebrow="Featured new drop" title={featured.title} />
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <Link
-              to="/collections/$slug"
-              params={{ slug: featured.slug }}
-              className="group block overflow-hidden"
-            >
-              <img
-                src={featured.cover_image_url}
-                alt={featured.title}
-                className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-            </Link>
-            <div>
-              <span className="eyebrow bg-champagne px-3 py-1 text-foreground">
-                New Drop
-              </span>
-              <p className="mt-5 font-display text-xl text-muted-foreground">
-                {featured.season_label}
-              </p>
-              <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
-                {featured.description}
-              </p>
+          <Reveal>
+            <div className="grid items-center gap-10 md:grid-cols-2">
               <Link
                 to="/collections/$slug"
                 params={{ slug: featured.slug }}
-                className="mt-8 inline-flex items-center gap-2 border border-foreground/30 px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                className="group block overflow-hidden"
               >
-                Discover the New Drop <ArrowRight className="h-4 w-4" />
+                <img
+                  src={featured.cover_image_url}
+                  alt={featured.title}
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
               </Link>
+              <div>
+                <span className="eyebrow bg-champagne px-3 py-1 text-foreground">
+                  New Drop
+                </span>
+                <p className="mt-5 font-display text-xl text-muted-foreground">
+                  {featured.season_label}
+                </p>
+                <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
+                  {featured.description}
+                </p>
+                <Link
+                  to="/collections/$slug"
+                  params={{ slug: featured.slug }}
+                  className="mt-8 inline-flex items-center gap-2 border border-foreground/30 px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                >
+                  Discover the New Drop <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </section>
       )}
 
@@ -155,27 +160,28 @@ function Index() {
         <div className="mx-auto max-w-6xl px-6">
           <SectionHeading eyebrow="The lookbook" title="Explore Our Collections" />
           <div className="grid gap-8 sm:grid-cols-2">
-            {(rest.length > 0 ? rest : collections).slice(0, 4).map((collection) => (
-              <Link
-                key={collection.id}
-                to="/collections/$slug"
-                params={{ slug: collection.slug }}
-                className="group block"
-              >
-                <div className="overflow-hidden">
-                  <img
-                    src={collection.cover_image_url}
-                    alt={collection.title}
-                    className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
-                </div>
-                <h3 className="mt-4 font-display text-2xl text-foreground">
-                  {collection.title}
-                </h3>
-                <p className="eyebrow mt-1 text-muted-foreground">
-                  {collection.season_label}
-                </p>
-              </Link>
+            {(rest.length > 0 ? rest : collections).slice(0, 4).map((collection, i) => (
+              <Reveal key={collection.id} delay={(i % 2) * 140}>
+                <Link
+                  to="/collections/$slug"
+                  params={{ slug: collection.slug }}
+                  className="group block"
+                >
+                  <div className="overflow-hidden">
+                    <img
+                      src={collection.cover_image_url}
+                      alt={collection.title}
+                      className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <h3 className="mt-4 font-display text-2xl text-foreground">
+                    {collection.title}
+                  </h3>
+                  <p className="eyebrow mt-1 text-muted-foreground">
+                    {collection.season_label}
+                  </p>
+                </Link>
+              </Reveal>
             ))}
           </div>
           <Link

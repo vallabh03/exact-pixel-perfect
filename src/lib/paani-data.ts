@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { supabase } from "@/integrations/supabase/client";
+import { assetUrl } from "@/lib/paani-assets";
 
 export type CollectionRow = {
   id: string;
@@ -24,6 +25,14 @@ export type AssetRow = {
   sort_order: number;
 };
 
+function normalizeCollection(row: CollectionRow): CollectionRow {
+  return { ...row, cover_image_url: assetUrl(row.cover_image_url) };
+}
+
+function normalizeAsset(row: AssetRow): AssetRow {
+  return { ...row, image_url: assetUrl(row.image_url) };
+}
+
 export type CollectionDetailData = {
   collection: CollectionRow;
   assets: AssetRow[];
@@ -40,7 +49,7 @@ export async function fetchPublicCollections(): Promise<CollectionRow[]> {
     .order("featured", { ascending: false })
     .order("published_at", { ascending: false });
   if (error) throw new Error(error.message);
-  return (data ?? []) as CollectionRow[];
+  return ((data ?? []) as CollectionRow[]).map(normalizeCollection);
 }
 
 export const publicCollectionsQuery = queryOptions({
@@ -66,8 +75,8 @@ export function collectionDetailQuery(slug: string) {
         .order("sort_order", { ascending: true });
       if (assetsError) throw new Error(assetsError.message);
       return {
-        collection: collection as CollectionRow,
-        assets: (assets ?? []) as AssetRow[],
+        collection: normalizeCollection(collection as CollectionRow),
+        assets: ((assets ?? []) as AssetRow[]).map(normalizeAsset),
       };
     },
   });
@@ -82,6 +91,6 @@ export const adminCollectionsQuery = queryOptions({
       .select("*")
       .order("updated_at", { ascending: false });
     if (error) throw new Error(error.message);
-    return (data ?? []) as CollectionRow[];
+    return ((data ?? []) as CollectionRow[]).map(normalizeCollection);
   },
 });

@@ -4,7 +4,7 @@ import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Images, Pencil, Plus, Star, Trash2 } from "lucide-react";
 
-import { ASSETS } from "@/lib/paani-assets";
+import { ASSETS, assetUrl } from "@/lib/paani-assets";
 import {
   adminCollectionsQuery,
   type AssetRow,
@@ -186,7 +186,7 @@ function StudioPage() {
             className="flex flex-col gap-4 border border-border bg-card p-4 sm:flex-row sm:items-center"
           >
             <img
-              src={collection.cover_image_url}
+              src={assetUrl(collection.cover_image_url)}
               alt={collection.title}
               className="aspect-[3/4] w-20 shrink-0 object-cover"
             />
@@ -485,7 +485,7 @@ function CollectionDialog({
             </Select>
             {form.cover_image_url && (
               <img
-                src={form.cover_image_url}
+                src={assetUrl(form.cover_image_url)}
                 alt="Cover preview"
                 className="mt-2 aspect-[3/4] w-32 object-cover"
               />
@@ -583,7 +583,7 @@ function LooksManager({
           {assets?.map((asset, i) => (
             <div key={asset.id} className="flex items-center gap-3">
               <img
-                src={asset.image_url}
+                src={assetUrl(asset.image_url)}
                 alt={asset.title}
                 className="aspect-[3/4] w-12 shrink-0 object-cover"
               />
